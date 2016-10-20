@@ -16,37 +16,37 @@ next() {
     printf "%-70s\n" "-" | sed 's/\s/-/g'
 }
 
-speed_test() {
-    speedtest=$(wget -4O /dev/null -T300 $1 2>&1 | awk '/\/dev\/null/ {speed=$3 $4} END {gsub(/\(|\)/,"",speed); print speed}')
-    ipaddress=$(ping -c1 -n `awk -F'/' '{print $3}' <<< $1` | awk -F'[()]' '{print $2;exit}')
-    nodeName=$2
-    if   [ "${#nodeName}" -lt "8" ]; then
-        echo -e "\e[33m$2\e[0m\t\t\t\t\e[32m$ipaddress\e[0m\t\t\e[31m$speedtest\e[0m"
-    elif [ "${#nodeName}" -lt "13" ]; then
-        echo -e "\e[33m$2\e[0m\t\t\t\e[32m$ipaddress\e[0m\t\t\e[31m$speedtest\e[0m"
-    elif [ "${#nodeName}" -lt "24" ]; then
-        echo -e "\e[33m$2\e[0m\t\t\e[32m$ipaddress\e[0m\t\t\e[31m$speedtest\e[0m"
-    elif [ "${#nodeName}" -ge "24" ]; then
-        echo -e "\e[33m$2\e[0m\t\e[32m$ipaddress\e[0m\t\t\e[31m$speedtest\e[0m"
-    fi
-}
+# speed_test() {
+#     speedtest=$(wget -4O /dev/null -T300 $1 2>&1 | awk '/\/dev\/null/ {speed=$3 $4} END {gsub(/\(|\)/,"",speed); print speed}')
+#     ipaddress=$(ping -c1 -n `awk -F'/' '{print $3}' <<< $1` | awk -F'[()]' '{print $2;exit}')
+#     nodeName=$2
+#     if   [ "${#nodeName}" -lt "8" ]; then
+#         echo -e "\e[33m$2\e[0m\t\t\t\t\e[32m$ipaddress\e[0m\t\t\e[31m$speedtest\e[0m"
+#     elif [ "${#nodeName}" -lt "13" ]; then
+#         echo -e "\e[33m$2\e[0m\t\t\t\e[32m$ipaddress\e[0m\t\t\e[31m$speedtest\e[0m"
+#     elif [ "${#nodeName}" -lt "24" ]; then
+#         echo -e "\e[33m$2\e[0m\t\t\e[32m$ipaddress\e[0m\t\t\e[31m$speedtest\e[0m"
+#     elif [ "${#nodeName}" -ge "24" ]; then
+#         echo -e "\e[33m$2\e[0m\t\e[32m$ipaddress\e[0m\t\t\e[31m$speedtest\e[0m"
+#     fi
+# }
 
-speed_test_v6() {
-    speedtest=$(wget -6O /dev/null -T300 $1 2>&1 | awk '/\/dev\/null/ {speed=$3 $4} END {gsub(/\(|\)/,"",speed); print speed}')
-    ipaddress=$(ping6 -c1 -n `awk -F'/' '{print $3}' <<< $1` | awk -F'[()]' '{print $2;exit}')
-    nodeName=$2
-    if   [ "${#nodeName}" -lt "8" -a "${#ipaddress}" -eq "13" ]; then
-        echo -e "\e[33m$2\e[0m\t\t\t\t\e[32m$ipaddress\e[0m\t\t\e[31m$speedtest\e[0m"
-    elif [ "${#nodeName}" -lt "13" -a "${#ipaddress}" -eq "13" ]; then
-        echo -e "\e[33m$2\e[0m\t\t\t\e[32m$ipaddress\e[0m\t\t\e[31m$speedtest\e[0m"
-    elif [ "${#nodeName}" -lt "24" -a "${#ipaddress}" -eq "13" ]; then
-        echo -e "\e[33m$2\e[0m\t\t\e[32m$ipaddress\e[0m\t\t\e[31m$speedtest\e[0m"
-    elif [ "${#nodeName}" -lt "24" -a "${#ipaddress}" -gt "13" ]; then
-        echo -e "\e[33m$2\e[0m\t\t\e[32m$ipaddress\e[0m\t\e[31m$speedtest\e[0m"
-    elif [ "${#nodeName}" -ge "24" ]; then
-        echo -e "\e[33m$2\e[0m\t\e[32m$ipaddress\e[0m\t\e[31m$speedtest\e[0m"
-    fi
-}
+# speed_test_v6() {
+#     speedtest=$(wget -6O /dev/null -T300 $1 2>&1 | awk '/\/dev\/null/ {speed=$3 $4} END {gsub(/\(|\)/,"",speed); print speed}')
+#     ipaddress=$(ping6 -c1 -n `awk -F'/' '{print $3}' <<< $1` | awk -F'[()]' '{print $2;exit}')
+#     nodeName=$2
+#     if   [ "${#nodeName}" -lt "8" -a "${#ipaddress}" -eq "13" ]; then
+#         echo -e "\e[33m$2\e[0m\t\t\t\t\e[32m$ipaddress\e[0m\t\t\e[31m$speedtest\e[0m"
+#     elif [ "${#nodeName}" -lt "13" -a "${#ipaddress}" -eq "13" ]; then
+#         echo -e "\e[33m$2\e[0m\t\t\t\e[32m$ipaddress\e[0m\t\t\e[31m$speedtest\e[0m"
+#     elif [ "${#nodeName}" -lt "24" -a "${#ipaddress}" -eq "13" ]; then
+#         echo -e "\e[33m$2\e[0m\t\t\e[32m$ipaddress\e[0m\t\t\e[31m$speedtest\e[0m"
+#     elif [ "${#nodeName}" -lt "24" -a "${#ipaddress}" -gt "13" ]; then
+#         echo -e "\e[33m$2\e[0m\t\t\e[32m$ipaddress\e[0m\t\e[31m$speedtest\e[0m"
+#     elif [ "${#nodeName}" -ge "24" ]; then
+#         echo -e "\e[33m$2\e[0m\t\e[32m$ipaddress\e[0m\t\e[31m$speedtest\e[0m"
+#     fi
+# }
 
 # speed() {
 #     speed_test 'http://cachefly.cachefly.net/100mb.test' 'CacheFly'
